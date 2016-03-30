@@ -1,16 +1,10 @@
 package bovin.project.musicxmood;
 
-import android.content.ContentResolver;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
@@ -21,9 +15,8 @@ import java.util.ArrayList;
  */
 public class MainActivity extends AppCompatActivity{
 
-    Toolbar toolbar;
     ViewPagerAdapter vpAdapter;
-    CharSequence[] Titles={"All Music", "Frag2"};
+    CharSequence[] Titles={"All Music", "Artists"};
     FragmentManager fm;
     ViewPager vp;
     SmartTabLayout tabs;
@@ -33,7 +26,6 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        toolbar = (Toolbar)findViewById(R.id.toolbar);
         setContentView(R.layout.activity_main);
         fm = getSupportFragmentManager();
 

@@ -20,7 +20,6 @@ public class AllMusicFragment extends Fragment {
     private Context context;
     private AllMusicRecyclerViewAdapter allMusicAdapter;
     private ArrayList<Music> allMusicArrayList;
-    private LinearLayoutManager linearLayoutManager;
     private VerticalRecyclerViewFastScroller fastScroller;
 
     @Override
@@ -32,7 +31,6 @@ public class AllMusicFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         allMusicAdapter = new AllMusicRecyclerViewAdapter(context, allMusicArrayList);
-        linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         super.onCreate(savedInstanceState);
     }
 
@@ -44,7 +42,7 @@ public class AllMusicFragment extends Fragment {
         fastScroller = (VerticalRecyclerViewFastScroller) allSongsFragmentView.findViewById(R.id.fastScroller);
 
         allMusicRecyclerView.setAdapter(allMusicAdapter);
-        allMusicRecyclerView.setLayoutManager(linearLayoutManager);
+        allMusicRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         fastScroller.setRecyclerView(allMusicRecyclerView);
         allMusicRecyclerView.addOnScrollListener(fastScroller.getOnScrollListener());
         return allSongsFragmentView;

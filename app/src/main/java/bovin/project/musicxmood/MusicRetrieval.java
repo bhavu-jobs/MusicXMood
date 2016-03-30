@@ -15,6 +15,8 @@ import android.util.Log;
 import android.webkit.MimeTypeMap;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Bonny Haveliwala on 012 12 Mar 2016.
@@ -26,16 +28,15 @@ public class MusicRetrieval {
     String sortOrder, selection, mimeTypeFromExtension;
     String[] selectionArgs, projection;
     Bitmap albumArt;
-    byte[] albumArtArray;
     Long id, duration;
     String title, artist, path;
     Uri externalMusicUri;
     int titleColumn, artistColumn, idColumn, durationColumn, pathColumn;
 
+
     public MusicRetrieval(Context context){
         this.context = context;
         musicArrayList = new ArrayList<>();
-
         externalMusicUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         projection = new String[]{MediaStore.Audio.Media._ID, MediaStore.Audio.Media.TITLE,
                 MediaStore.Audio.Media.ARTIST, MediaStore.Audio.Media.DURATION, MediaStore.Audio.Media.DATA};
@@ -49,7 +50,7 @@ public class MusicRetrieval {
 
         ContentResolver musicResolver = context.getContentResolver();
         Cursor externalMusicCursor = musicResolver.query(externalMusicUri, projection, selection, selectionArgs, sortOrder);
-        MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
+        //MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
 
         if(externalMusicCursor != null && externalMusicCursor.moveToFirst()){
             titleColumn = externalMusicCursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
@@ -75,19 +76,20 @@ public class MusicRetrieval {
             }while(externalMusicCursor.moveToNext());
             externalMusicCursor.close();
         }
+        externalMusicCursor.close();
         return musicArrayList;
     }
 
-    public Bitmap scaledAlbumArt(byte[] data){
+   /* public Bitmap scaledAlbumArt(byte[] data){
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inTempStorage = new byte[16*1024];
         options.inSampleSize = 4;
         return BitmapFactory.decodeByteArray(data, 0, data.length, options);
-    }
+    }*/
 
     class MusicRetrievalASyncTask extends AsyncTask<Void, Void, ArrayList<Music>> {
 
-        Activity activity = (Activity)context;
+        Activity activity = (Activity) context;
 
         @Override
         protected ArrayList<Music> doInBackground(Void... params) {
@@ -109,5 +111,4 @@ public class MusicRetrieval {
             super.onPostExecute(arrayList);
         }
     }
-
 }

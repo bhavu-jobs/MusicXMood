@@ -1,6 +1,5 @@
 package bovin.project.musicxmood;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -8,9 +7,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
 
 import java.io.Serializable;
 
@@ -69,7 +65,6 @@ public class Music implements Parcelable {
             this.albumArt = new BitmapDrawable(context.getResources(), albumArtBitmap);
         }else{
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                //Log.i("MediaResolver", name);
                 this.albumArt = context.getDrawable(getAlbumArtLetter(name));
             }
             else

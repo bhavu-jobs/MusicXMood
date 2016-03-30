@@ -1,15 +1,7 @@
 package bovin.project.musicxmood;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.os.Handler;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-
-import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 public class SplashScreenActivity extends Activity {
 
@@ -19,9 +11,7 @@ public class SplashScreenActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
-        MusicRetrieval musicRetrieval = new MusicRetrieval(this);
-        MusicRetrieval.MusicRetrievalASyncTask aSyncTask = musicRetrieval.new MusicRetrievalASyncTask();
-        aSyncTask.execute();
+        new MusicRetrieval(this).new MusicRetrievalASyncTask().execute();
 
        /* new Handler().postDelayed(new Runnable(){
             public void run(){
