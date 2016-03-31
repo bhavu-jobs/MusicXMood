@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ public class AllMusicFragment extends Fragment {
     private AllMusicRecyclerViewAdapter allMusicAdapter;
     private ArrayList<Music> allMusicArrayList;
     private VerticalRecyclerViewFastScroller fastScroller;
+    private View allSongsFragmentView;
 
     @Override
     public void onAttach(Context context) {
@@ -30,13 +32,14 @@ public class AllMusicFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        allMusicAdapter = new AllMusicRecyclerViewAdapter(context, allMusicArrayList);
         super.onCreate(savedInstanceState);
+        allMusicAdapter = new AllMusicRecyclerViewAdapter(context, allMusicArrayList);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View allSongsFragmentView = inflater.inflate(R.layout.all_music_fragment, container, false);
+        Log.i("STACK!", "Entered OnCreateView AllMusicFragment");
+        allSongsFragmentView = inflater.inflate(R.layout.all_music_fragment, container, false);
 
         RecyclerView allMusicRecyclerView = (RecyclerView) allSongsFragmentView.findViewById(R.id.allMusicRecyclerView);
         fastScroller = (VerticalRecyclerViewFastScroller) allSongsFragmentView.findViewById(R.id.fastScroller);
@@ -52,4 +55,10 @@ public class AllMusicFragment extends Fragment {
         this.allMusicArrayList = allMusicArrayList;
     }
 
+    @Override
+    public void onDestroyView() {
+        Log.i("STACK!","Entered OnDestroy AllMusicFragment");
+        super.onDestroyView();
+        //allSongsFragmentView = null;
+    }
 }

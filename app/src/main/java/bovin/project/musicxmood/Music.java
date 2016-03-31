@@ -20,9 +20,9 @@ public class Music implements Parcelable {
     private String artist;
     private String mood;
     private long duration;
-    private Drawable albumArt;
+    private int albumArtID;
     Context context;
-    private Bitmap albumArtBitmap;
+    //private Bitmap albumArtBitmap;
 
     public Music(Parcel parcel){
         this._ID = parcel.readLong();
@@ -30,7 +30,7 @@ public class Music implements Parcelable {
         this.artist = parcel.readString();
         this.mood = parcel.readString();
         this.duration = parcel.readLong();
-        this.albumArtBitmap = parcel.readParcelable(getClass().getClassLoader());
+       // this.albumArtBitmap = parcel.readParcelable(getClass().getClassLoader());
     }
 
     //@TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -41,7 +41,7 @@ public class Music implements Parcelable {
         this.artist = artist;
         this.mood = "<Undefined>";
         this.duration = duration;
-        this.albumArtBitmap = albumArt;
+        //this.albumArtBitmap = albumArt;
     }
 
     public static final Creator<Music> CREATOR = new Creator<Music>() {
@@ -60,22 +60,18 @@ public class Music implements Parcelable {
         this._ID = _ID;
     }
 
-    public Drawable getAlbumArt(Context context, String name, Bitmap albumArtBitmap){
+    public int getAlbumArt(Context context, String name, Bitmap albumArtBitmap){
         if(albumArtBitmap != null) {
-            this.albumArt = new BitmapDrawable(context.getResources(), albumArtBitmap);
+           // this.albumArt = new BitmapDrawable(context.getResources(), albumArtBitmap);
         }else{
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                this.albumArt = context.getDrawable(getAlbumArtLetter(name));
-            }
-            else
-                this.albumArt = context.getResources().getDrawable(getAlbumArtLetter(name));
+            this.albumArtID = getAlbumArtLetter(name);
         }
-        return albumArt;
+        return albumArtID;
     }
 
-    public Bitmap getAlbumArtBitmap(){
+    /*public Bitmap getAlbumArtBitmap(){
         return albumArtBitmap;
-    }
+    }*/
 
     public long get_ID() {
         return _ID;
@@ -116,7 +112,7 @@ public class Music implements Parcelable {
             firstLetter = name.charAt(++i);
         }
         if(!(Character.isLetter(firstLetter))){
-            return R.drawable.splash_screen_1_small;
+            return R.drawable.a;
         }
         /*while(!(Character.isAlphabetic(firstLetter)) && i < name.length()-1) {
             firstLetter = name.charAt(++i);
@@ -219,6 +215,6 @@ public class Music implements Parcelable {
         dest.writeString(artist);
         dest.writeString(mood);
         dest.writeLong(duration);
-        dest.writeParcelable(albumArtBitmap, flags);
+        //dest.writeParcelable(albumArtBitmap, flags);
     }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
@@ -25,14 +26,14 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.i("STACK!","Entered OnCreate MainActivity");
         setContentView(R.layout.activity_main);
         fm = getSupportFragmentManager();
 
         Intent intent = getIntent();
         musicArrayList =  intent.getParcelableArrayListExtra("MusicArrayList");
 
-        vpAdapter = new ViewPagerAdapter(this ,fm, Titles, Titles.length, musicArrayList);
+        vpAdapter = new ViewPagerAdapter(getApplicationContext() ,fm, Titles, Titles.length, musicArrayList);
         vp = (ViewPager)findViewById(R.id.mainViewPager);
         vp.setAdapter(vpAdapter);
 
@@ -50,5 +51,10 @@ public class MainActivity extends AppCompatActivity{
         });
 
         tabs.setViewPager(vp);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

@@ -30,4 +30,5 @@ dependencies {
     compile 'com.ogaclejapan.smarttablayout:library:1.6.0@aar'
     compile 'xyz.danoz:recyclerviewfastscroller:0.1.3'
     compile 'com.android.support:cardview-v7:23.2.0'
+    compile 'com.squareup.picasso:picasso:2.3.3'
 }

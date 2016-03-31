@@ -27,7 +27,7 @@ public class MusicRetrieval {
     Context context;
     String sortOrder, selection, mimeTypeFromExtension;
     String[] selectionArgs, projection;
-    Bitmap albumArt;
+    //Bitmap albumArt;
     Long id, duration;
     String title, artist, path;
     Uri externalMusicUri;
@@ -71,8 +71,8 @@ public class MusicRetrieval {
                 if(albumArtArray!=null)
                     albumArt = scaledAlbumArt(albumArtArray);
                 else*/
-                albumArt = null;
-                musicArrayList.add(new Music(context, id, title, artist, duration, albumArt));
+                //albumArt = null;
+                musicArrayList.add(new Music(context, id, title, artist, duration, null));
             }while(externalMusicCursor.moveToNext());
             externalMusicCursor.close();
         }

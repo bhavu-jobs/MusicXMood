@@ -1,12 +1,17 @@
 package bovin.project.musicxmood;
 
+import android.app.Application;
 import android.content.Context;
+import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,16 +32,29 @@ public class ArtistsRecyclerViewAdapter extends RecyclerView.Adapter<ArtistsRecy
     Music music;
     View itemView;
 
+    class ArtistsViewHolder extends RecyclerView.ViewHolder {
+        ImageView artistImage;
+        TextView titleOfArtist;
+        public ArtistsViewHolder(View itemView) {
+            super(itemView);
+            titleOfArtist = (TextView)itemView.findViewById(R.id.titleOfArtist);
+            artistImage = (ImageView)itemView.findViewById(R.id.artistImage);
+            titleOfArtist.setSelected(true);
+        }
+    }
+
     public ArtistsRecyclerViewAdapter(Context context, ArrayList<Music> musicArrayList){
         this.context = context;
         this.musicArrayList = musicArrayList;
-        artistSet = new TreeSet<>();
+        this.artistSet = new TreeSet<>();
         this.artistArrayList = makeArtistArrayList();
     }
 
     @Override
     public ArtistsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.artists_row, parent,false);
+        System.gc();
+        itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.artists_row, parent, false);
         return new ArtistsViewHolder(itemView);
     }
 
@@ -44,22 +62,14 @@ public class ArtistsRecyclerViewAdapter extends RecyclerView.Adapter<ArtistsRecy
     public void onBindViewHolder(ArtistsViewHolder holder, int position) {
         music = musicArrayList.get(position);
         holder.titleOfArtist.setText(artistArrayList.get(position));
-        holder.artistImage.setBackground(music.getAlbumArt(context, artistArrayList.get(position), null));
+        Picasso.with(context)
+                .load(music.getAlbumArt(context, artistArrayList.get(position), null))
+                .into(holder.artistImage);
     }
 
     @Override
     public int getItemCount() {
         return artistArrayList.size();
-    }
-
-    class ArtistsViewHolder extends RecyclerView.ViewHolder {
-        ImageView artistImage;
-        TextView titleOfArtist;
-        public ArtistsViewHolder(View itemView) {
-            super(itemView);
-            artistImage = (ImageView)itemView.findViewById(R.id.artistImage);
-            titleOfArtist = (TextView)itemView.findViewById(R.id.titleOfArtist);
-        }
     }
 
     ArrayList<String> makeArtistArrayList(){
@@ -72,5 +82,11 @@ public class ArtistsRecyclerViewAdapter extends RecyclerView.Adapter<ArtistsRecy
         Collections.sort(artistArrayList);
         artistSet = null;
         return artistArrayList;
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(ArtistsViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        System.gc();
     }
 }
